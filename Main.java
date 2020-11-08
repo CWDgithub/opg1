@@ -1,3 +1,5 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
@@ -75,15 +77,20 @@ public class Main {
         try {
             int i=0;
             FileReader fileReader=new FileReader(args[0]);
+            BufferedReader bufferedReader=new BufferedReader(fileReader);
+            String string=bufferedReader.readLine();
             stack[stop++]='#';
-            while ((i=fileReader.read())!=-1){
-                char ch=(char)i;
-                if(ch=='\r'){
+            while (i<string.length()){
+                char ch=string.charAt(i);
+                /*
+                if(ch=='\r'||ch=='\n'){
                     break;
                 }
+                */
                 if(stop==1){
                     stack[stop++]=ch;
                     System.out.println("I"+ch);
+                    i++;
                 }
                 else {
                     int t = stop - 1;
@@ -103,10 +110,20 @@ public class Main {
                     if (matrix[lnum][rnum] == -1) {
                         stack[stop++] = right;
                         System.out.println("I" + ch);
-                    } else {
+                        i++;
+                    }
+                    else if(matrix[lnum][rnum]==0){
+                        stack[stop++]=right;
+                        System.out.println("I"+ch);
                         boolean res = simply();
-                        stack[stop++]=ch;
-                        System.out.println("I" + ch);
+                        if (!res) {
+                            System.out.println("RE");
+                            return;
+                        }
+                        else i++;
+                    }
+                    else {
+                        boolean res = simply();
                         if (!res) {
                             System.out.println("RE");
                             return;

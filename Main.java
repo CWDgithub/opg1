@@ -66,9 +66,12 @@ public class Main {
                 return false;
             }
         }
+        /*
         else if(stack[stop-1]=='E'&&stop==2){
             System.out.println("R");
         }
+
+         */
         else return false;
         return true;
     }
@@ -80,8 +83,11 @@ public class Main {
             BufferedReader bufferedReader=new BufferedReader(fileReader);
             String string=bufferedReader.readLine();
             stack[stop++]='#';
-            while (i<string.length()){
-                char ch=string.charAt(i);
+            while (i<=string.length()){
+                char ch;
+                if(i==string.length())
+                    ch='#';
+                else ch=string.charAt(i);
                 /*
                 if(ch=='\r'||ch=='\n'){
                     break;
@@ -112,7 +118,7 @@ public class Main {
                         System.out.println("I" + ch);
                         i++;
                     }
-                    else if(matrix[lnum][rnum]==0){
+                    else if(matrix[lnum][rnum]==0&&lnum!=5){
                         stack[stop++]=right;
                         System.out.println("I"+ch);
                         boolean res = simply();
@@ -123,6 +129,9 @@ public class Main {
                         else i++;
                     }
                     else {
+                        if(stop==2&&stack[1]=='E'){
+                            return;
+                        }
                         boolean res = simply();
                         if (!res) {
                             System.out.println("RE");
@@ -131,6 +140,7 @@ public class Main {
                     }
                 }
             }
+            /*
             while (stop>2){
                 boolean res = simply();
                 if (!res) {
@@ -138,6 +148,7 @@ public class Main {
                     return;
                 }
             }
+             */
         }
         catch (Exception e){
             e.printStackTrace();
